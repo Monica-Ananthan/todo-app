@@ -67,3 +67,5 @@ locale/
 # Ignore any Jupyter Notebook checkpoints
 .ipynb_checkpoints/
 
+staticfiles/
+
