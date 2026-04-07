@@ -4,7 +4,7 @@
 
 <div class="flex h-screen bg-gray-100" x-data="{ 
         activeCategory: {{ request.GET.category|default:'null' }}, 
-        filter: '{{ request.GET.filter|default:" all" }}' }">
+        filter: '{{ request.GET.filter|default:"all" }}' }">
     <div class="w-64 bg-white shadow-lg p-5">
         <div class="flex items-center gap-2 mb-6">
             <img src="{% static 'images/logo.png' %}" alt="logo" class="w-6 h-6 object-contain">
