@@ -30,7 +30,6 @@ __pycache__/
 .idea/
 
 # Project-specific temporary or generated files
-__init__.py
 *.DS_Store
 
 # Media(these are often served separately in production)
@@ -48,9 +47,7 @@ pip-log.txt
 .env
 .env.*
 
-# Ignore database migrations if you're using a versioned approach to migrations
-**/migrations/*.py
-**/migrations/*.pyc
+
 
 # Ignore the compiled translations
 locale/
