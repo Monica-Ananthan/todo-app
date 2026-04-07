@@ -1,0 +1,22 @@
+<div class="flex items-center justify-between text-sm text-[#333333] p-2 rounded-md group cursor-pointer hover:bg-gray-100 transition"
+    :class="activeCategory === {{ cat.id }} 
+        ? 'bg-[#ffede9] text-[#000]' 
+        : 'hover:text-[#ff7e6b]'"
+    @click="activeCategory = {{ cat.id }};
+            filter = null;"
+>
+    <div class="flex items-center gap-2 flex-1 truncate" hx-get="/?category={{ cat.id }}" hx-target="#task-container">
+        <span class="w-2 h-2 rounded-full {{cat.color}}"></span>
+        <span class="truncate max-w-[120px]">{{ cat.name }}</span>
+        <span class="text-xs bg-gray-200 px-2 py-0.5 rounded">
+            {{ cat.task_count }}
+        </span>
+    </div>
+
+    <button class="opacity-0 group-hover:opacity-100 transition font-bold text-red-500 hover:text-red-700" @click="
+        showModal = true;
+        deleteUrl = '/delete-category/{{ cat.id }}/'"
+    >
+        ✕
+    </button>
+</div>

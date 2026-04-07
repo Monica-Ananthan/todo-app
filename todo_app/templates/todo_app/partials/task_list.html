@@ -1,0 +1,9 @@
+    <ul class="space-y-2">
+        {% for task in tasks %}
+            {% include "todo_app/partials/task_item.html" %}
+        {% empty %}
+            <p class="text-gray-500">No tasks</p>
+        {% endfor %}
+    </ul>
+
+    {% include "todo_app/partials/pagination.html" %}

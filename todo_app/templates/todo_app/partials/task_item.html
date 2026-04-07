@@ -1,0 +1,117 @@
+<li id="task-{{ task.id }}"
+    x-data="{ editing: false }"
+    class="group flex items-center justify-between bg-white px-4 
+    py-3 rounded-xl border border-gray-200 shadow-sm transition-all duration-300 ease-out
+    hover:shadow-lg hover:-translate-y-[1px] hover:border-gray-300
+    {% if task.completed %}
+        bg-gray-50 border-gray-200 opacity-60 hover:shadow-none hover:-translate-y-0
+    {% else %}
+        bg-white border-gray-200 shadow-sm hover:shadow-lg hover:-translate-y-[2px] hover:border-gray-300
+    {% endif %}
+    "
+    :class="{{ task.completed|yesno:'true,false' }} 
+    ? 'opacity-60 hover:shadow-none hover:-translate-y-0' 
+    : ''"
+>
+
+    <div class="flex items-center gap-3 flex-1 min-w-0">
+        <button hx-post="/toggle/{{ task.id }}/" 
+                hx-target="#task-{{ task.id }}" 
+                hx-swap="outerHTML swap:0.2s"
+                hx-on::after-request="
+                    window.dispatchEvent(new CustomEvent('show-toast', {
+                        detail: { message: 'Task updated' }
+                    }));
+                "
+            class="flex-shrink-0"
+        >
+            <span class="w-5 h-5 flex items-center justify-center rounded-full 
+                border-2 transition-all duration-200"
+                :class="{{ task.completed|yesno:'true,false' }} 
+                    ? 'bg-green-500 border-green-500 scale-100' 
+                    : 'border-gray-300 hover:border-gray-400'"
+            >
+                <i class="fa-solid fa-check text-white text-[10px]"
+                    x-show="{{ task.completed|yesno:'true,false' }}"></i>
+            </span>
+        </button>
+        <div class="flex-1 min-w-0">
+            <span x-show="!editing" class="block text-sm truncate leading-5 transition-all duration-300 ease-out"
+                :class="{ 'line-through text-gray-400 ': {{ task.completed|yesno:'true,false' }},
+                    'text-gray-800': !{{ task.completed|yesno:'true,false' }} }">
+                {{ task.title }}
+            </span>
+            <input x-show="editing" x-init="$watch('editing', v => v && $nextTick(() => $el.focus()))"
+                @keydown.escape="editing = false" type="text" name="title" value="{{ task.title }}"
+                class="w-full text-sm border border-gray-300 rounded-md px-2 
+                py-1 focus:outline-none focus:ring-1 focus:ring-blue-500"
+                hx-post="/update/{{ task.id }}/" hx-trigger="keyup[key=='Enter']" 
+                hx-target="#task-{{ task.id }}"
+                hx-swap="outerHTML swap:0.2s" 
+                hx-include="closest li"
+                hx-on::after-request="
+                    window.dispatchEvent(new CustomEvent('show-toast', {
+                        detail: { message: 'Task updated' }
+                    }));
+                "
+            >
+            <div x-data="{ editingDate: false }" class="flex items-center gap-2 mt-1 text-xs">
+                {% if task.category %}
+                <span class="flex items-center gap-1 text-gray-500">
+                    <span class="w-2 h-2 rounded-full {{task.category.color}}"></span>
+                    {{ task.category.name }}
+                </span>
+                {% endif %}
+                <div x-show="!editingDate" @click="editingDate = true"
+                    class="flex items-center gap-1 cursor-pointer px-1 py-0.5 
+                    rounded hover:bg-gray-100 hover:shadow-sm transition">
+        
+                    <i class="fa-regular fa-calendar text-[11px] text-gray-400"></i>
+                    {% if task.due_date %}
+                    <span class="text-gray-400 hover:text-gray-600">
+                        {{ task.due_date}}
+                    </span>
+                    {% else %}
+                    <span class="italic text-gray-300">Set date</span>
+                    {% endif %}
+                </div>
+
+                <input x-show="editingDate" x-transition
+                    x-init="$watch('editingDate', v => v && $nextTick(() => $el.showPicker && $el.showPicker()))"
+                    type="date" name="due_date" value="{{ task.due_date|date:'Y-m-d'|default:'' }}" class="text-xs border border-gray-200 rounded px-2 py-1 
+                    focus:ring-1 focus:ring-blue-400 outline-none" 
+                    hx-post="/update/{{ task.id }}/" hx-trigger="change"
+                    hx-target="#task-{{ task.id }}" hx-swap="outerHTML" 
+                    hx-on::after-request="
+                        window.dispatchEvent(new CustomEvent('show-toast', {
+                            detail: { message: 'Date updated' }
+                        }));
+                    "
+                    @change="editingDate = false"
+                    @blur="editingDate = false"
+                >
+
+            </div>
+        </div>
+    </div>
+
+    <div class="flex items-center gap-2 group-hover:opacity-100 transition-all duration-150">
+        <button @click="editing = true"
+            class="opacity-0 translate-y-1 group-hover:opacity-100 group-hover:translate-y-0 
+                    transition-all duration-200 delay-75 ease-out p-1.5 rounded-md hover:bg-gray-100 text-gray-400 hover:text-blue-500 transition">
+            <i class="fa-solid fa-pen text-xs"></i>
+        </button>
+        <button hx-delete="/delete/{{ task.id }}/" hx-target="#task-{{ task.id }}" 
+            hx-swap="outerHTML swap:0.2s"
+            hx-on::after-request="
+                window.dispatchEvent(new CustomEvent('show-toast', {
+                    detail: { message: 'Task deleted' }
+                }));
+            "
+            class="opacity-0 translate-y-1 group-hover:opacity-100 group-hover:translate-y-0 
+            transition-all duration-200 delay-75 ease-out p-1.5 rounded-md hover:bg-gray-100 text-gray-400 hover:text-red-500 transition">
+            <i class="fa-solid fa-trash text-xs"></i>
+        </button>
+
+    </div>
+</li>

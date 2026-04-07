@@ -1,0 +1,10 @@
+#category-list::-webkit-scrollbar {
+  width: 7px;
+}
+#category-list::-webkit-scrollbar-thumb {
+  background: #e5e7eb;
+  border-radius: 10px;
+}
+#category-list::-webkit-scrollbar-thumb:hover {
+  background: #d1d5db;
+}

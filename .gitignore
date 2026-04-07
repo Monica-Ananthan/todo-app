@@ -1,0 +1,69 @@
+#todo123 //password
+# postgresbdbpass- moni
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.sqlite3',
+#         'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+#     }
+# }
+
+# Python virtual environment
+.venv/
+
+# Compiled Python files
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+
+# SQLite database
+*.sqlite3
+
+# Log files
+*.log
+
+# Secret keys and sensitive settings
+*.secret
+
+# IDE-specific files and directories
+.vscode/
+.idea/
+
+# Project-specific temporary or generated files
+__init__.py
+*.DS_Store
+
+# Media(these are often served separately in production)
+media/
+
+# Local development settings
+local_settings.py
+
+# Dependency-related files
+*.pyc
+*.egg-info/
+pip-log.txt
+
+# Environment-specific configuration files
+.env
+.env.*
+
+# Ignore database migrations if you're using a versioned approach to migrations
+**/migrations/*.py
+**/migrations/*.pyc
+
+# Ignore the compiled translations
+locale/
+
+# Ignore any personal configuration files
+*.conf
+
+# Ignore coverage data
+.coverage
+
+# Ignore backup files
+*.bak
+
+# Ignore any Jupyter Notebook checkpoints
+.ipynb_checkpoints/
+

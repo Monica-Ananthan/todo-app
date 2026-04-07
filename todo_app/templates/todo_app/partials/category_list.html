@@ -1,0 +1,5 @@
+{% for cat in categories %}
+    {% include "todo_app/partials/category_item.html" %}
+{% empty %}
+    <p class="text-gray-400 text-sm">No categories</p>
+{% endfor %}
