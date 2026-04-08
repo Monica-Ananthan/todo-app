@@ -58,15 +58,18 @@ def index(request):
 def add_task(request):
     if request.method == "POST":
         title = request.POST.get("title")
-        category_id = request.POST.get("category")
         due_date = request.POST.get("due_date")
+        category_id = request.POST.get("category")
 
         if title:
             task = Task.objects.create(
                 title=title,
                 category_id=category_id if category_id else None,
-                due_date = request.POST.get("due_date")
             )
+
+        if due_date:
+            task.due_date = datetime.strptime(due_date, "%Y-%m-%d").date()
+            task.save()
 
             task_html = render_to_string(
                 "todo_app/partials/task_item.html",
@@ -132,6 +135,7 @@ def delete_task(request, task_id):
         </div>
     """)
 
+ 
 def update_task(request, task_id):
     task = get_object_or_404(Task, id=task_id)
 
@@ -139,10 +143,10 @@ def update_task(request, task_id):
         title = request.POST.get("title")
         due_date = request.POST.get("due_date")
 
-        if title:
+        if title is not None:
             task.title = title
 
-        if "due_date" in request.POST:
+        if due_date is not None:
             if due_date:
                 task.due_date = datetime.strptime(due_date, "%Y-%m-%d").date()
             else:
@@ -153,7 +157,7 @@ def update_task(request, task_id):
     return render(
         request,
         "todo_app/partials/task_item.html",
-        {"task": task, "today": date.today()}
+        {"task": task}
     )
 
 def add_category(request):

@@ -68,7 +68,7 @@
                                     this.reset();   
                                     open = false;
                                     window.dispatchEvent(new CustomEvent('show-toast', {
-                                        detail: { message: 'Task added successfully ' }
+                                        detail: { message: 'Task Added Successfully', type: 'success' }
                                     }));
                                 }
                             "
@@ -103,10 +103,11 @@
                                         hx-on::after-request="
                                             if(event.detail.successful){
                                                 window.dispatchEvent(new CustomEvent('show-toast', {
-                                                    detail: { message: 'Category added' }
+                                                    detail: { message: 'Category Added Successfully' }
                                                 }));
                                             }
-                                        " @htmx:afterRequest="showCategory = false"
+                                        " 
+                                        @htmx:afterRequest="showCategory = false"
                                         class="bg-gradient-to-r from-[#ff7e6b] to-[#ffb199] text-white px-4 py-2 rounded-lg text-sm hover:transition">
                                         Add
                                     </button>
