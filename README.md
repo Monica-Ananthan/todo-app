@@ -52,7 +52,7 @@ todo-app/
 ### Clone the repository
 
 ```bash
-git clone https://github.com/your-username/todo-app.git
+git clone https://github.com/Monica-Ananthan/todo-app.git
 cd todo-app
 python -m venv venv
 source venv\Scripts\activate
